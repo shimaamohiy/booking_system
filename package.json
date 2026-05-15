@@ -1,0 +1,36 @@
+{
+  "name": "booking-system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --env-file=.env index.js",
+    "dev": "node --watch --trace-warnings --env-file=.env index.js",
+    "test": "jest tests/",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "build": "echo \"No build step required\" && exit 0"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.14.1",
+    "multer": "^2.1.1",
+    "nodemailer": "^7.0.2",
+    "sharp": "^0.34.5"
+  },
+  "devDependencies": {
+    "eslint": "^10.4.0",
+    "jest": "^30.4.2",
+    "prettier": "^3.8.3",
+    "supertest": "^7.2.2"
+  }
+}

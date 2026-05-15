@@ -1,0 +1,6 @@
+.env
+node_modules/
+uploads/
+booking-frontend/node_modules/
+booking-frontend/build/
+.DS_Store
