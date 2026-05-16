@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const feedbackSchema = mongoose.Schema({
+const feedbackSchema = mongoose.Schema(
+  {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
@@ -7,7 +8,7 @@ const feedbackSchema = mongoose.Schema({
     },
     professionalId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Professional',
+      ref: 'User',
       required: true,
     },
     rating: {
@@ -16,8 +17,9 @@ const feedbackSchema = mongoose.Schema({
       max: 5,
       required: true,
     },
-    comment: String
-  }, { timestamps: true });
-  
-  module.exports = mongoose.model("Feedback", feedbackSchema);
-  
+    comment: String,
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model('Feedback', feedbackSchema);
