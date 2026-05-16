@@ -1,27 +1,32 @@
 const mongoose = require('mongoose');
-const professionalSchema = new mongoose.Schema({
+const professionalSchema = new mongoose.Schema(
+  {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       required: true,
       unique: true,
     },
     // name: {
-    //   type: String, 
+    //   type: String,
     //   required: true ,
-    // },
+    
     specialty: {
       type: String,
-      enum: ['doctor', 'Dermatologist', 'Ophthalmologist','Dentist'],
-        default: 'doctor'
+      enum: ['doctor', 'Dermatologist', 'Ophthalmologist', 'Dentist'],
+      default: 'doctor',
     },
     bio: String,
     rating: {
-      type: Number, 
+      type: Number,
       default: 0,
     },
-    // services: [{ type: mongoose.Schema.Types.ObjectId, ref: "Service" }],
-  }, { timestamps: true });
-  
-  module.exports = mongoose.model("Professional", professionalSchema);
-  
+    reviewCount: {
+      type: Number,
+      default: 0,
+    },
+  },
+  { timestamps: true }
+);
+
+module.exports = mongoose.model('Professional', professionalSchema);
