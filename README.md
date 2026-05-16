@@ -5,6 +5,7 @@ A comprehensive, full-stack appointment booking system built using the **MERN St
 ## 🚀 Features
 
 ### Authentication & Authorization
+
 - Secure Registration and Login.
 - JWT-based authentication (supporting both Cookies and Headers for flexible cross-origin support).
 - Role-based Access Control (RBAC):
@@ -13,11 +14,13 @@ A comprehensive, full-stack appointment booking system built using the **MERN St
   - **Admin**: Has full access to manage all services, assign services to professionals, and oversee the system.
 
 ### Service Management
+
 - Create, Read, Update, and Delete (CRUD) services.
 - Admins can assign specific services to specific professionals.
 - Professionals have an isolated dashboard to manage only the services assigned to them.
 
 ### Appointment Booking Flow
+
 - Dynamic booking system where users first select a **Professional**, then choose from the specific **Services** offered by that professional.
 - Avoids double-booking by checking for overlapping time slots.
 - Users can update their appointment times or cancel them.
@@ -27,6 +30,7 @@ A comprehensive, full-stack appointment booking system built using the **MERN St
 ## 🛠️ Tech Stack
 
 **Frontend:**
+
 - **React.js** (Create React App)
 - **Bootstrap 5** for responsive, mobile-first styling.
 - **Axios** for API requests and interceptors.
@@ -35,6 +39,7 @@ A comprehensive, full-stack appointment booking system built using the **MERN St
 - **React Hot Toast** for beautiful, non-intrusive notifications.
 
 **Backend:**
+
 - **Node.js & Express.js** for building the RESTful API.
 - **MongoDB & Mongoose** for the database schema and queries.
 - **JSON Web Token (JWT)** & **Bcrypt.js** for security and password hashing.
@@ -68,10 +73,12 @@ Booking System/
 ## 💻 Running the Project Locally
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/) (v20+ recommended for native `.env` support)
 - A running instance of [MongoDB](https://www.mongodb.com/) (Local or Atlas)
 
 ### 1. Setup the Backend
+
 1. Open a terminal in the root directory (`Booking System/`).
 2. Install the dependencies:
    ```bash
@@ -91,6 +98,7 @@ Booking System/
    ```
 
 ### 2. Setup the Frontend
+
 1. Open a new terminal and navigate to the frontend directory:
    ```bash
    cd booking-frontend
@@ -110,21 +118,25 @@ Booking System/
 ## 📡 API Endpoints Summary
 
 ### Authentication (`/api/sign`)
+
 - `POST /signup` - Register a new account.
 - `POST /login` - Login to receive JWT token.
 - `POST /logout` - Clear cookies and logout.
 
 ### Services (`/api/services`)
+
 - `GET /` - Retrieve services (filtered automatically based on user role).
 - `POST /` - Add a new service (Admin or Professional).
 - `PUT /:id` - Edit a service.
 - `DELETE /:id` - Delete a service.
 
 ### Appointments (`/api/appointments`)
+
 - `GET /` - Fetch appointments for the logged-in user or professional.
 - `POST /` - Book a new appointment.
 - `PUT /:id` - Update the date/time of an appointment.
 - `DELETE /:id` - Cancel an appointment.
 
 ### Users (`/api/users`)
+
 - `GET /professionals` - Get a list of all professionals (used for dropdowns).
