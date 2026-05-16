@@ -3,15 +3,16 @@ require('dotenv').config();
 const express = require('express');
 const helmet = require('helmet');
 const cors = require('cors');
-const cookieParser = require("cookie-parser");
-const mongoose = require("mongoose");
+const cookieParser = require('cookie-parser');
+const mongoose = require('mongoose');
 const path = require('path');
 
-const signRouter = require("./routers/signRouter");
+const signRouter = require('./routers/signRouter');
 const appointmentRouter = require('./routers/appointmentRouter');
 const serviceRouter = require('./routers/serviceRouter');
 const profileRouter = require('./routers/profileRouter');
-const userRouter = require('./routers/userRouter'); // ✅ أضف هذا لو هتستخدم professionals
+const userRouter = require('./routers/userRouter'); 
+const feedbackRouter = require('./routers/feedbackRouter');
 
 const app = express();
 
@@ -29,26 +30,30 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // 🌐 CORS
-app.use(cors({
-  origin: 'http://localhost:3000',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+  })
+);
 
 // 🔌 MongoDB connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose
+  .connect(process.env.MONGO_URI)
   .then(() => {
     console.log('✅ Database connected successfully');
   })
-  .catch(err => {
+  .catch((err) => {
     console.log('❌ MongoDB connection error:', err);
   });
 
 // 🛣️ Routes
-app.use("/api/sign", signRouter);
-app.use("/api/appointments", appointmentRouter);
-app.use("/api/services", serviceRouter);
-app.use("/api/profile", profileRouter);
-app.use("/api/users", userRouter); // ✅ أضف هذا لو هتستخدم professionals
+app.use('/api/sign', signRouter);
+app.use('/api/appointments', appointmentRouter);
+app.use('/api/services', serviceRouter);
+app.use('/api/profile', profileRouter);
+app.use('/api/users', userRouter); 
+app.use('/api/feedback', feedbackRouter);
 
 // 🏠 Test route
 app.get('/', (req, res) => {
