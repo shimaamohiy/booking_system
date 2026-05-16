@@ -2,12 +2,12 @@ const User = require('../models/usersModel');
 const fs = require('fs');
 const path = require('path');
 
-// الحصول على ملف التعريف
+
 exports.getProfile = async (req, res) => {
   try {
     const userId = req.user.userId;
     const user = await User.findById(userId).select('-password');
-    
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -19,13 +19,13 @@ exports.getProfile = async (req, res) => {
   }
 };
 
-// تحديث ملف التعريف (اسم، إيميل)
+
 exports.updateProfile = async (req, res) => {
   try {
     const userId = req.user.userId;
     const { name, email } = req.body;
 
-    // التحقق من عدم استخدام الإيميل من قبل مستخدم آخر
+    
     if (email) {
       const existingUser = await User.findOne({ email, _id: { $ne: userId } });
       if (existingUser) {
@@ -38,11 +38,10 @@ exports.updateProfile = async (req, res) => {
     if (email) updateData.email = email;
     updateData.updatedAt = Date.now();
 
-    const user = await User.findByIdAndUpdate(
-      userId,
-      updateData,
-      { new: true, runValidators: true }
-    ).select('-password');
+    const user = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+      runValidators: true,
+    }).select('-password');
 
     res.json({ success: true, user, message: 'Profile updated successfully' });
   } catch (error) {
@@ -51,38 +50,42 @@ exports.updateProfile = async (req, res) => {
   }
 };
 
-// تحديث الصورة الشخصية
+
 exports.updateProfilePicture = async (req, res) => {
   try {
     const userId = req.user.userId;
-    
+
     if (!req.file || !req.file.filename) {
       return res.status(400).json({ message: 'No image uploaded' });
     }
 
-    // جلب المستخدم الحالي لحذف الصورة القديمة
+    
     const currentUser = await User.findById(userId);
     if (currentUser && currentUser.profilePicture) {
-      const oldImagePath = path.join(__dirname, '../uploads', path.basename(currentUser.profilePicture));
+      const oldImagePath = path.join(
+        __dirname,
+        '../uploads',
+        path.basename(currentUser.profilePicture)
+      );
       if (fs.existsSync(oldImagePath)) {
         fs.unlinkSync(oldImagePath);
       }
     }
 
-    // تحديث مسار الصورة الجديدة
+    
     const user = await User.findByIdAndUpdate(
       userId,
-      { 
+      {
         profilePicture: req.file.filepath,
-        updatedAt: Date.now()
+        updatedAt: Date.now(),
       },
       { new: true }
     ).select('-password');
 
-    res.json({ 
-      success: true, 
+    res.json({
+      success: true,
       profilePicture: user.profilePicture,
-      message: 'Profile picture updated successfully' 
+      message: 'Profile picture updated successfully',
     });
   } catch (error) {
     console.error('Update profile picture error:', error);
@@ -90,7 +93,7 @@ exports.updateProfilePicture = async (req, res) => {
   }
 };
 
-// حذف الصورة الشخصية
+
 exports.deleteProfilePicture = async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -112,7 +115,7 @@ exports.deleteProfilePicture = async (req, res) => {
   }
 };
 
-// تغيير كلمة المرور
+
 exports.changePassword = async (req, res) => {
   try {
     const userId = req.user.userId;
@@ -124,13 +127,13 @@ exports.changePassword = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    // التحقق من كلمة المرور الحالية
+    
     const isMatch = await doHashValidation(currentPassword, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Current password is incorrect' });
     }
 
-    // تشفير كلمة المرور الجديدة
+    
     const hashedPassword = await doHash(newPassword, 12);
     user.password = hashedPassword;
     user.updatedAt = Date.now();
