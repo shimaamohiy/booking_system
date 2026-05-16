@@ -3,13 +3,13 @@ const sharp = require('sharp');
 const path = require('path');
 const fs = require('fs');
 
-// التأكد من وجود مجلد uploads
+
 const uploadDir = path.join(__dirname, '../uploads');
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// تكوين multer للتخزين المؤقت
+
 const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
@@ -27,10 +27,10 @@ const fileFilter = (req, file, cb) => {
 const upload = multer({
   storage: storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  fileFilter: fileFilter
+  fileFilter: fileFilter,
 });
 
-// معالجة الصورة (تحسين الحجم)
+
 const processProfileImage = async (req, res, next) => {
   if (!req.file) {
     return next();
